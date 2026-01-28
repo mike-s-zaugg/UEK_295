@@ -4,18 +4,20 @@
  * @property {string} title - The title of the application.
  * @property {string} description - A brief description of the API.
  * @property {string} docPath - The path where the API documentation can be found.
+ * @property {string} version - The version of the API.
  * @property {Object} author - Information about the author of the API.
  * @property {string} author.name - The name of the author.
  * @property {string} author.email - The email address of the author.
  * @property {string} author.url - The URL to the author's website or profile.
  */
 export const swaggerInfo = {
-  title: 'myApp',
-  description: 'Die API Beschreibung',
+  title: 'Todo Api von Mike Zaugg',
+  description: 'Ein API zur Verwaltung von Todo items',
   docPath: 'docs',
+  version: '1.0.0',
   author: {
-    name: 'Kursleiter',
-    email: 'coach@ict-uek.ch',
-    url: 'https://ict-uek.ch',
+    name: 'Mike Sandor Zaugg',
+    email: 'm.zaugg.inf24@stud.bbbaden.ch',
+    url: 'https://suxesiv.ch',
   },
 } as const;

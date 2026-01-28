@@ -20,14 +20,14 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     // wichtig, wenn wir .env verwenden
     ConfigModule.forRoot({
-      isGlobal: true, // wichtig, damit überall verfügbar
+      isGlobal: true,
     }),
-    // datenbank initialisieren. Wir verwenden sqlite
+    // datenbank initialisieren
     TypeOrmModule.forRoot({
       autoLoadEntities: true,
-      synchronize: true, // !! Wichtig: Nur für Entwicklungszwecke aktivieren, in Produktion wird das nicht empfohlen. Hier sollte man mit Migrations arbeiten
+      synchronize: true,
       type: 'sqlite',
-      database: process.env.DB_NAME || 'todo/myApp.db',
+      database: process.env.DB_DATABASE || 'data/todo.db',
     }),
     AuthModule,
   ],
