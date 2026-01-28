@@ -1,22 +1,36 @@
+# Dependencies
 node_modules
+
+# Build Output
 dist
+
+# Environment Variablen
 .env
+
+# IDE & Editors
 .vscode
-*.zip
 .idea
+
+# File types
+*.zip
 *.pdf
+*.log
 
-/data
-!data/.gitkeep
+# Test Coverage
+coverage
 
-docker/postgres_data
+# Data Folder
+/data/*
+!/data/.gitkeep
+
+# Docker Data
+docker/postgres_data/*
 !docker/postgres_data/.gitkeep
 
-coverage
-# Dokumentation compodoc
-documentation
+# Compodoc Documentation
+documentation/*
 !documentation/.gitkeep
 
-# dokumentation selbst erstellt
-docs
+# Custom Documentation
+docs/*
 !docs/.gitkeep
