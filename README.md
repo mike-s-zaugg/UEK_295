@@ -20,3 +20,9 @@ Die Prüfung ging am Anfang schleppend voran. Ich hatte probiert alles von Grund
 Nach einem Hinweis des Kursleiters habe ich eine Vorhandene Version aus dem Unterricht als Grundlage verwendet. Basierend auf dieser ging es viel schneller und einfacher die Anforderungen zu Implementieren.
 Ich hatte auch einige Probleme bei den Postman Tests, jedoch konnte ich diese beheben.
 Es war nicht sehr schwer Code-Coverage von 100% zu erreichen. Nach einigen Anpassungen gelang dies.
+
+ ---
+
+ ### Info
+ Ich bin mir bewusst dass Ordner wie Data noch vorhanden sind. Jedoch ist die Anweisung wiedersprüchlich, dass gitkeep im Projekt vorhanden sein soll aber die Ordner nicht.
+ Deshalb werden alle anderen Dateien aus den betroffenen (ausser gitkeep) nicht angezeigt.
