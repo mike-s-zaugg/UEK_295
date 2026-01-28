@@ -1,32 +1,74 @@
+// src/main.ts
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ConfigService } from '@nestjs/config';
+import { AppModule } from './app.module';
+import { HttpMetaInterceptor } from './interceptors/http-meta-interceptor.service.interceptor';
+import { globalPrefix, swaggerInfo, version } from './informations';
 
+/**
+ * Initializes and starts the NestJS application.
+ *
+ * This method performs the following actions:
+ * - Creates the NestJS application using the `AppModule`.
+ * - Retrieves the application port from environment variables or defaults to port 3000.
+ * - Configures global interceptors, validation pipes, and a global route prefix.
+ * - Sets up OpenAPI documentation using the Swagger module.
+ * - Starts listening for incoming requests on the configured port.
+ * - Logs startup information using the NestJS Logger.
+ *
+ */
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
+  // Wir erstellen die NestJS-Anwendung basierend auf dem App-Modul.
+  const app = await NestFactory.create(AppModule);
 
-    app.setGlobalPrefix('api');
+  const configService = app.get(ConfigService);
 
-    // 2. Validierung
-    app.useGlobalPipes(new ValidationPipe({
-        whitelist: true,
-        transform: true,
-    }));
+  // Wir lesen den Port aus den Umgebungsvariablen aus, standardmäßig verwenden wir Port 3000.
+  const port = configService.get<number>('PORT') || 3000;
 
-    // 3. Swagger Konfiguration
-    const config = new DocumentBuilder()
-        .setTitle('Todo API von Mike Zaugg')
-        .setDescription('Ein API zur Verwaltung von Todo items')
-        .setVersion('1.0.0')
-        .setContact('Mike Zaugg', '', 'm.zaugg.inf24@stud.bbbaden.ch')
-        .addBearerAuth()
-        .build();
+  // interceptor statt middleware
+  app.useGlobalInterceptors(new HttpMetaInterceptor());
 
-    const document = SwaggerModule.createDocument(app, config);
-    SwaggerModule.setup('docs', app, document);
+  // globalPipes
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+    }),
+  );
 
-    // Port
-    await app.listen(process.env.PORT ?? 3000);
+  // globalPrefix
+  app.setGlobalPrefix(globalPrefix);
+
+  // openApi setup
+  const config = new DocumentBuilder()
+    .setTitle(swaggerInfo.title)
+    .setDescription(swaggerInfo.description)
+    .setContact(
+      swaggerInfo.author.name,
+      swaggerInfo.author.url,
+      swaggerInfo.author.email,
+    )
+    .setVersion(version)
+    .addBearerAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+
+  SwaggerModule.setup(swaggerInfo.docPath, app, document);
+
+  // Wir lassen die Anwendung auf dem definierten Port lauschen.
+  await app.listen(port);
+
+  // Wir verwenden den nestjs Logger, um eine Startmeldung auszugeben. Als zweiter Parameter wird der Kontext 'Bootstrap' übergeben.
+  Logger.log(`NEST application successfully started`, bootstrap.name);
+  Logger.debug(
+    `Server in version: ${swaggerInfo.docPath} ist jetzt erreichbar unter http://localhost:${port}/${globalPrefix}`,
+    bootstrap.name,
+  );
+  Logger.debug(
+    `Swagger ist jetzt erreichbar unter http://localhost:${port}/${swaggerInfo.docPath}`,
+    bootstrap.name,
+  );
 }
-bootstrap();
+bootstrap().catch((err) => console.error(err));

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://raw.githubusercontent.com/compodoc/compodoc/master/src/config/schema.json",
+  "tsconfig": "tsconfig.docs.json",
+  "output": "documentation",
+  "language": "en-US",
+  "theme": "vagrant",
+  "exclude": ["documents", "src/documents", "**/*.spec.ts"],
+  "silent": true,
+  "logLevel": "error"
+}
+

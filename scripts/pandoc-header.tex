@@ -1,0 +1,51 @@
+\usepackage{float}
+\usepackage[section]{placeins}
+\usepackage{datetime2}
+
+% Kapitel-Überschrift ohne "Chapter 1" Zeile
+\usepackage{titlesec}
+
+\titleformat{\chapter}[display]{\normalfont\huge\bfseries}{}{0pt}{}
+
+% Logo einbinden
+\usepackage{graphicx}
+
+% Header/Footer
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+
+\pagestyle{fancy}
+\fancyhf{} % alles löschen
+
+% Platz für Header (wichtig bei Logos)
+\setlength{\headheight}{32pt}
+\setlength{\headsep}{12pt}
+
+% Optional: Linie im Header
+\renewcommand{\headrulewidth}{0.4pt}
+
+% ----- HEADER -----
+% Links: Projektname
+%\lhead{\textbf{myApp-final}}
+% Nur den Kapitel-Titel in \leftmark schreiben (ohne "Chapter 1.")
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+% Mitte: Kapitelname (nicht uppercase)
+\chead{\nouppercase{\leftmark}}
+% Rechts: Logo (vertikal sauber ausgerichtet)
+\rhead{\raisebox{-0.2\height}{\includegraphics[height=34pt]{scripts/logo.png}}}
+
+% ----- FOOTER -----
+
+
+% Footer
+\fancyfoot[L]{Created: \DTMnow}
+% Seite X / Y (alle Seiten)
+\fancyfoot[R]{\thepage\ /\ \pageref{LastPage}}
+
+% Erste Seite: komplett leer (aber sie zählt mit)
+\AtBeginDocument{\thispagestyle{empty}}
+
+% Optional: sicherstellen, dass Kapitel/TOC-Seiten nicht wieder auf "plain" zurückfallen
+\makeatletter
+\let\ps@plain\ps@fancy
+\makeatother
