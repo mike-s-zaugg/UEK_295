@@ -83,7 +83,7 @@ describe('TodoService', () => {
 
       const result = await service.findAll(1, userId, false);
 
-      expect(todoRepo.find).toHaveBeenCalledWith({ where: { createdById: userId } });
+      expect(todoRepo.find).toHaveBeenCalledWith({ where: { createdById: userId, isClosed: false } });
       expect(result).toEqual(todos);
     });
   });
@@ -207,23 +207,29 @@ describe('TodoService', () => {
   });
 
   describe('remove', () => {
+    // Hier wurde das 4. Argument (userId) hinzugefügt, um die Fehler zu beheben.
+
     it('should throw ForbiddenException if not admin', async () => {
-      await expect(service.remove(1, 1, false)).rejects.toThrow(ForbiddenException);
+      // 4. Argument (z.B. 1) hinzufügen
+      await expect(service.remove(1, 1, false, 1)).rejects.toThrow(ForbiddenException);
     });
 
     it('should throw NotFoundException if todo not found', async () => {
       todoRepo.findOne.mockResolvedValue(null);
-      await expect(service.remove(1, 1, true)).rejects.toThrow(NotFoundException);
+      // 4. Argument (z.B. 1) hinzufügen
+      await expect(service.remove(1, 1, true, 1)).rejects.toThrow(NotFoundException);
     });
 
     it('should remove todo if admin and todo exists', async () => {
       const todo = { id: 1 };
+      const userId = 1;
       todoRepo.findOne.mockResolvedValue(todo);
       todoRepo.remove.mockResolvedValue(todo);
 
-      const result = await service.remove(1, 1, true);
+      const result = await service.remove(1, 1, true, userId);
+
       expect(todoRepo.remove).toHaveBeenCalledWith(todo);
-      expect(result).toEqual(todo);
+      expect(result).toMatchObject({ ...todo, updatedById: userId });
     });
   });
 });

@@ -10,7 +10,12 @@ import {
   Put,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { TodoService } from './todo.service'; // Pfad angepasst (gleicher Ordner)
 import { AuthGuard } from '../auth/guards/auth.guard'; // Pfad angepasst (ein Ordner hoch zu auth)
 import { CreateTodoDto } from './dto/create-todo.dto';
@@ -99,7 +104,8 @@ export class TodoController {
     @CorrId() corrId: number,
     @Param('id', ParseIntPipe) id: number,
     @IsAdmin() isAdmin: boolean,
+    @UserId() userId: number,
   ) {
-    return this.todoService.remove(corrId, id, isAdmin);
+    return this.todoService.remove(corrId, id, isAdmin, userId);
   }
 }
