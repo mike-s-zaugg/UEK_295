@@ -15,4 +15,8 @@
 
 ## Fazit
 
-Wie ist es dir gelaufen? was war einfach und was war für dich schwierig.
+### Wie ist es dir gelaufen? was war einfach und was war für dich schwierig.
+Die Prüfung ging am Anfang schleppend voran. Ich hatte probiert alles von Grund auf neu zu Programmieren, dabei stiess ich auf einige Probleme.
+Nach einem Hinweis des Kursleiters habe ich eine Vorhandene Version aus dem Unterricht als Grundlage verwendet. Basierend auf dieser ging es viel schneller und einfacher die Anforderungen zu Implementieren.
+Ich hatte auch einige Probleme bei den Postman Tests, jedoch konnte ich diese beheben.
+Es war nicht sehr schwer Code-Coverage von 100% zu erreichen. Nach einigen Anpassungen gelang dies.
