@@ -1,7 +1,6 @@
 // src/app.module.ts
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ArticleModule } from './modules/article/article.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 
@@ -31,7 +30,6 @@ import { ConfigModule } from '@nestjs/config';
       database: process.env.DB_NAME || 'todo/myApp.db',
     }),
     AuthModule,
-    ArticleModule,
   ],
 })
 export class AppModule {}
